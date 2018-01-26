@@ -4,12 +4,12 @@ While making a buying decision, people generally get their input from various re
 profito deals with utilizing the power of small scale social influencers to increase the sales by using a bottom up rather than top down approach. The transactions are commited using the **blockchain technology** for the purpose of fast and secure transfers.
 
 ## Dependencies
--Django
--Unipath
--Bleach
--Django-Crispy-form
--solc
--npm
--web3
--ethereumjs-tx
--ethereumjs-util
+- Django
+- Unipath
+- Bleach
+- Django-Crispy-form
+- solc
+- npm
+- web3
+- ethereumjs-tx
+- ethereumjs-util
