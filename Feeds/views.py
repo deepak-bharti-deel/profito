@@ -31,12 +31,20 @@ def ads(request): #post with images and require page refresh
 	    form = FeedForm(request.POST or None, request.FILES or None)
 	    if form.is_valid():
 	        instance = form.save(commit=False)
-	        post = request.POST['post']
+	        post   = request.POST['post']
+	        amount = request.POST.get('amount')	        
 	        post = post.strip()     	#+ str(to_user_profile_pk_indirect)
 	        if len(post) > 0:
 	            instance.post = post[:255]
+	            instance.amount = amount
 	            instance.save()  
 	            feed=instance
 	            # instance.optimize_image()
     ads = Feed.objects.all()
     return render(request, 'feeds/ads.html', {'ads':ads})
+
+
+def ad_detail(request, id=id):
+	ad = get_object_or_404(Feed, id=id)
+	return render(request, 'feeds/ad_detail.html', {'ad':ad})
+

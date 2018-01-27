@@ -36,6 +36,8 @@ class Profile(models.Model):
             width_field="width_field")
     height_field = models.IntegerField(default=450)
     width_field = models.IntegerField(default=350)
+    shares = models.IntegerField(default=100,blank=True, null=True)
+    profitos = models.IntegerField(default=100,blank=True, null=True)
 
     class Meta: 
         db_table = 'users_profile'

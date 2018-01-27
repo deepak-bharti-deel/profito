@@ -25,8 +25,7 @@ def signup(request):
 			# try:
 			# 	user.last_name = full_name.split(' ')[1]
 			# except:
-			# 	user.last_name = ' '
-
+			# 	user.last_name = ' ' 
 			user.save()
 			login(request, user)
 

@@ -20,7 +20,7 @@ from django.urls import path
 from .views import home
 from Users.views import signup
 from django.contrib.auth import views as auth_views
-from Feeds.views import (ads)
+from Feeds.views import (ads, ad_detail)
 
 
 urlpatterns = [
@@ -31,9 +31,9 @@ urlpatterns = [
         name='login'),
     path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
     path('ads/', ads, name="ads"),
+    path('ad_detail/(?P<id>\d+)/', ad_detail, name="ad_detail")
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
                           document_root=settings.MEDIA_ROOT)
-   

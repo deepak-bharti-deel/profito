@@ -21,6 +21,7 @@ class Feed(models.Model):
             width_field="width_field")    
     height_field = models.IntegerField(default=0)
     width_field = models.IntegerField(default=0)     
+    ad_value    = models.IntegerField(default=0)
 
     class Meta:
         verbose_name = _('Feed')
@@ -33,3 +34,8 @@ class Feed(models.Model):
 
     def linkfy_post(self):
         return bleach.linkify(escape(self.post))  
+
+    # def get_absolute_url(self):
+    #     return reverse('detail', kwargs={'slug': self.slug})
+    def post_pic_url(self):
+        return "http://127.0.0.1:8000"+self.post_pic.url

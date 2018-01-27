@@ -1,3 +1,4 @@
+{% load social_share %}
 {% load i18n %}
 {% load staticfiles %}
 <!DOCTYPE html>
@@ -40,6 +41,14 @@
 	</script>
 
 	<!-- Normalize -->
+<style type="text/css">
+	
+.user_ {
+	background-color: #008080;
+	border-radius: 10px;
+	list-style: none;
+}
+</style>
 </head>
 
 <body>
@@ -53,20 +62,68 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
+	<nav class="navbar">
+		<div class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="{% url 'home' %}"><h3 style="color:purple;"><strong>Profito</strong></h3></a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+				<ul class="nav navbar-nav navbar-right main-nav">				
+				{% if request.user.is_authenticated %}
+					<li><a href="{% url 'logout' %}">{{request.user.username}}</a></li>
+				{% else %}
+				{% endif %}
+				
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
 	
 <div class="row">
 
-	<div class="col col-md-6 col-md-offset-3">
+<br><br><br>
+
+<div class="col col-md-2 col-md-offset-1">
+	<ul class="user_">
+		<li style="padding:20px;">
+			{% if request.user.profile.image %}
+			<img src="{{request.user.profile.image.url}}" class="img img-responsive">
+			{% endif %}
+		</li>
+		<li>User     - {{request.user.username}}</li>
+		<li>Profitos - {{request.user.profile.profitos}}</li>
+		<li>Shares   - {{request.user.profile.shares}}</li>
+		<li>Job 	 - {{request.user.profile.job}}</li>
+	</ul>
+	</div>
+
+
+	<div class="col col-md-6 col-md-offset-1" style="margin-left: 200px;">
            <form method="post" id="compose-form" action="{% url 'ads' %}" enctype="multipart/form-data">
               
               {% csrf_token %}
 				<br><br><br>
+				<input type="hidden" id="id" value="{{request.user.id}}">
+				<input type="text" id="amount" value="Add Amount">
+
               <div class="form-group">
                 <textarea class="form-control" style="max-width: 490px;" name="post" required="True"></textarea>
               </div> 
 
               <div class="form-group">   
                 <input type="file" name="post_pic" id="post_pic" style="max-width:250px; padding-bottom: 4px; margin-top:-14px;" title="You can response without pic also" class="filetip">
+                
+
                 <button type="submit" id="btn-post" class="btn btn-success shownowtip" title="Click and amaze people with your response">
                 <span class="glyphicon glyphicon-send"></span> {% trans 'Post' %}
                 </button>
@@ -74,14 +131,17 @@
               </div>
  
       </form>
-			
+			<br><br>
+                <button id="submit_btn" class="btn btn-info">Pay Add value</button>
+
+                <br><br><br>
 		<br><br>
 		{% for ad in ads %}
 			{{ad.user}} | {{ ad.date }}
 			<br>
 			{{ad.post}}
 			{% if ad.post_pic %}
-				<img src="{{ad.post_pic.url}}" class="img img-responsive"> 
+				<a href="{% url 'ad_detail' ad.id %}"> <img src="{{ad.post_pic.url}}" class="img img-responsive"> </a>
 			{% endif %}
 			<br>
 			<tr>
@@ -95,6 +155,12 @@
 			<a href="https://twitter.com/home?status={{share_string}}%20{{request.build_absolute_uri}}">
 			<i class="fa fa-twitter fa-1.5x fa-fw"></i>
 			    </a>
+
+			{% if ad.post_pic %}
+			{% post_to_facebook ad.post_pic_url "Post to Facebook!" %}
+			
+			{{ad.post_pic_url}}
+			{% endif %}
 			  </span>
 			  </td>
 			 </tr>
@@ -105,7 +171,24 @@
 	</div>
 </div>
 
+<script src="{% static 'profito/blockchain/final.js' %}"></script>
 
+<script type="text/javascript">
+
+	$("#submit_btn").click(function(){
+			console.log('inside ');
+		function collectMoney(){
+			console.log('inside collectMoney');
+		  	var id=document.getElementById('id').value;
+		  	var amount=document.getElementById('amount').value;
+		//get from web
+			buyer = web3.eth.accounts[id];
+			deployedContract.getFromCompany(amount,buyer,{ from: buyer , gas: 3000000 ,gasPrice: 5});
+			console.log('done collectMoney');
+		}
+		collectMoney();
+	});
+</script>
 
 </body>
 
