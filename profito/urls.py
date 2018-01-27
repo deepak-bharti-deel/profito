@@ -16,8 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from .views import home
+from Users.views import signup
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', home, name='home'),
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls), 
+    path('signup/', signup, name='signup'),
+    path('login/', auth_views.login, {'template_name': 'profito/home.html'}, 
+        name='login'),
+    path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
 ]
