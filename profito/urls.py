@@ -13,11 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings 
+from django.conf.urls.static import static 
 from django.contrib import admin
 from django.urls import path
 from .views import home
 from Users.views import signup
 from django.contrib.auth import views as auth_views
+from Feeds.views import (ads)
+
 
 urlpatterns = [
     path('', home, name='home'),
@@ -26,4 +30,10 @@ urlpatterns = [
     path('login/', auth_views.login, {'template_name': 'profito/home.html'}, 
         name='login'),
     path('logout/', auth_views.logout, {'next_page': '/'}, name='logout'),
+    path('ads/', ads, name="ads"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
+   

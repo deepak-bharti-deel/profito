@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     #custom_apps
     'Users',
     'Feeds',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.core.context_processors.request',
             ],
         },
     },
@@ -141,7 +143,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/home/django/django_project/django_project/static_root'
+STATIC_ROOT = PROJECT_DIR.child('profito','static_root')
 # static_root is the server outside our project wher e static files are sent to store
 
 STATICFILES_DIRS = (
@@ -150,7 +152,7 @@ STATICFILES_DIRS = (
     )
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/django/django_project/django_project/media_root'
+MEDIA_ROOT = PROJECT_DIR.child('profito','media_root')
 
 #Crispy forms tags settings
 CRISPY_TEMPLATE_PACK = 'bootstrap3'

@@ -1,0 +1,115 @@
+{% load i18n %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Bit-addone</title>
+	<meta name="description" content="Cardio is a free one page template made exclusively for Codrops by Luka Cvetinovic" />
+	<meta name="keywords" content="html template, css, free, one page, gym, fitness, web design" />
+	<meta name="author" content="Luka Cvetinovic for Codrops" />
+	<!-- Favicons (created with http://realfavicongenerator.net/)-->
+	<link rel="apple-touch-icon" sizes="57x57" href="{% static 'profito/img/favicons/apple-touch-icon-57x57.png' %}">
+	<link rel="apple-touch-icon" sizes="60x60" href="{% static 'profito/img/favicons/apple-touch-icon-60x60.png' %}">
+	<link rel="icon" type="image/png" href="{% static 'profito/img/favicons/favicon-32x32.png' %}" sizes="32x32">
+	<link rel="icon" type="image/png" href="{% static 'profito/img/favicons/favicon-16x16.png' %}" sizes="16x16">
+	<link rel="manifest" href="{% static 'profito/img/favicons/manifessett.json' %}">
+	<link rel="shortcut icon" href="{% static 'profito/img/favicons/favicon.ico' %}">
+	<meta name="msapplication-TileColor" content="#00a8ff">
+	<meta name="msapplication-config" content="{% static 'profito/img/favicons/browserconfig.xml' %}">
+	<meta name="theme-color" content="#ffffff">
+
+
+	<!--for facebook sharing api-->
+	<meta property="og:url" content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html" />
+	<meta property="og:type" content="article" />
+	<meta property="og:title" content="When Great Minds Don’t Think Alike" />
+	<meta property="og:description" content="How much does culture influence creative thinking?" />
+	<meta property="og:image" content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg" />
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">  
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js">
+	</script>
+
+	<!-- Normalize -->
+</head>
+
+<body>
+
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.9&appId=1867252943531138";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+	
+<div class="row">
+
+	<div class="col col-md-6 col-md-offset-3">
+           <form method="post" id="compose-form" action="{% url 'ads' %}" enctype="multipart/form-data">
+              
+              {% csrf_token %}
+				<br><br><br>
+              <div class="form-group">
+                <textarea class="form-control" style="max-width: 490px;" name="post" required="True"></textarea>
+              </div> 
+
+              <div class="form-group">   
+                <input type="file" name="post_pic" id="post_pic" style="max-width:250px; padding-bottom: 4px; margin-top:-14px;" title="You can response without pic also" class="filetip">
+                <button type="submit" id="btn-post" class="btn btn-success shownowtip" title="Click and amaze people with your response">
+                <span class="glyphicon glyphicon-send"></span> {% trans 'Post' %}
+                </button>
+                <button type="submit" class="btn btn-default btn-cancel-compose">{% trans 'Cancel' %}</button>
+              </div>
+ 
+      </form>
+			
+		<br><br>
+		{% for ad in ads %}
+			{{ad.user}} | {{ ad.date }}
+			<br>
+			{{ad.post}}
+			{% if ad.post_pic %}
+				<img src="{{ad.post_pic.url}}" class="img img-responsive"> 
+			{% endif %}
+			<br>
+			<tr>
+			<td class="pull-right">
+			<span>
+			<span style="font-size: 10px; color: gray;">Share</span>  
+
+			<a href="https://www.facebook.com/sharer/sharer.php?u={{request.build_absolute_uri}}" style="margin-right:2px; margin-left: -5px;">
+			<i class="fa fa-facebook fa-1.5x fa-fw"></i>
+			</a> 
+			<a href="https://twitter.com/home?status={{share_string}}%20{{request.build_absolute_uri}}">
+			<i class="fa fa-twitter fa-1.5x fa-fw"></i>
+			    </a>
+			  </span>
+			  </td>
+			 </tr>
+
+			<br><br><br><br>
+
+		{% endfor %}
+	</div>
+</div>
+
+
+
+</body>
+
+</html>
+
+
+
