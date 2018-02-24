@@ -33,7 +33,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 # EMAIL_HOST_USER = 'deepakbharti823@gmail.com'
 EMAIL_HOST_USER='hohosguys@gmail.com'
 # EMAIL_HOST_PASSWORD = 'zwmdutnsiyyhskge'
-EMAIL_HOST_PASSWORD = 'MyGooglE@3S'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 587
 
 ''' 
