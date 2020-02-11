@@ -2,7 +2,7 @@ bleach==2.1.2
 certifi==2017.11.5
 chardet==3.0.4
 codegen==1.0
-Django==2.0
+Django==2.2.10
 django-bower==5.2.0
 django-crispy-forms==1.7.0
 django-rosetta==0.7.14
